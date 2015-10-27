@@ -1,0 +1,10 @@
+﻿Build started 2015/10/27 21:09:41.
+     1>Project "C:\Users\HU FANGYUAN\documents\visual studio 2013\Projects\test\test\test.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\HU FANGYUAN\Documents\Visual Studio 2013\Projects\extern\eigen" /I"C:\Users\HU FANGYUAN\Documents\Visual Studio 2013\Projects\extern\lsqrWin\Src\LSqrDll" /Zi /nologo /W3 /WX- /MP /O2 /Oi /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /openmp /Fo"x64\Release\\" /Fd"x64\Release\vc120.pdb" /Gd /TP /errorReport:prompt test.cpp
+         test.cpp
+     1>Done Building Project "C:\Users\HU FANGYUAN\documents\visual studio 2013\Projects\test\test\test.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:23.06

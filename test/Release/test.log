@@ -1,0 +1,17 @@
+﻿Build started 2015/10/26 16:19:57.
+     1>Project "C:\Users\HU FANGYUAN\documents\visual studio 2013\Projects\test\test\test.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\HU FANGYUAN\Documents\Visual Studio 2013\Projects\extern\lsqrWin\Src\LSqrDll" /I"C:\Users\HU FANGYUAN\Documents\Visual Studio 2013\Projects\extern\eigen" /Zi /nologo /W3 /WX- /MP /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /openmp /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp test.cpp
+         stdafx.cpp
+         test.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\HU FANGYUAN\documents\visual studio 2013\Projects\test\Release\test.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\HU FANGYUAN\Documents\Visual Studio 2013\Projects\extern\lsqrWin\Bin" LSqr.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\HU FANGYUAN\documents\visual studio 2013\Projects\test\Release\test.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\HU FANGYUAN\documents\visual studio 2013\Projects\test\Release\test.lib" /MACHINE:X86 /SAFESEH Release\stdafx.obj
+         Release\test.obj
+         Generating code
+         Finished generating code
+         test.vcxproj -> C:\Users\HU FANGYUAN\documents\visual studio 2013\Projects\test\Release\test.exe
+     1>Done Building Project "C:\Users\HU FANGYUAN\documents\visual studio 2013\Projects\test\test\test.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.64
