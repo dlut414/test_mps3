@@ -79,31 +79,32 @@ class Derivative_A_ {
 public:
 	template <unsigned N>	static __forceinline R Power(const R& x) { return x*Power<N - 1>(x); }
 	template <>				static __forceinline R Power<0>(const R& x) { return 1; }
+	template <unsigned N, unsigned M>	static __forceinline R A() { return (factorial<N>::value)/(factorial<N-M>::value); }
 };
 
 template <typename R, unsigned D, unsigned P>	class Derivative_A : public Derivative_A_<R, D, P> {};
 
 template <typename R, unsigned P>				class Derivative_A<R, 1, P> : public Derivative_A_<R, 1, P>{
 private:
-	template <unsigned Der, unsigned P_ = 1, bool Zero = (Der>P_) >
+	template <unsigned Der, unsigned P_ = 1, bool Zero = (Der>P_), bool Over = (P_==P)>
 	struct Gen_ {
-		static __forceinline void Gen(const R& x, R* const out) { out[P_ - 1] = Der*Power<P_ - Der>(x); Gen_<Der, P_ + 1, (Der>(P_ + 1))>::Gen(x, out); }
-		static __forceinline void Gen(const R& s, const R& x, R* const out) { out[P_ - 1] = Der*Power<P_ - Der>(x / s)*Power<Der>(1 / s); Gen_<Der, P_ + 1, (Der>(P_ + 1))>::Gen(s, x, out); }
+		static __forceinline void Gen(const R& x, R* const out) { out[P_ - 1] = A<P_,Der>()*Power<P_ - Der>(x); Gen_<Der, P_ + 1, (Der>(P_ + 1))>::Gen(x, out); }
+		static __forceinline void Gen(const R& s, const R& x, R* const out) { out[P_ - 1] = A<P_, Der>()*Power<P_ - Der>(x / s)*Power<Der>(1 / s); Gen_<Der, P_ + 1, (Der>(P_ + 1))>::Gen(s, x, out); }
 	};
-	template <unsigned Der, unsigned P_>
-	struct Gen_<Der, P_, true> {
+	template <unsigned Der, unsigned P_, bool Over>
+	struct Gen_<Der, P_, true, Over> {
 		static __forceinline void Gen(const R& x, R* const out) { out[P_ - 1] = 0; Gen_<Der, P_ + 1, (Der>(P_ + 1))>::Gen(x, out); }
 		static __forceinline void Gen(const R& s, const R& x, R* const out) { out[P_ - 1] = 0; Gen_<Der, P_ + 1, (Der>(P_ + 1))>::Gen(s, x, out); }
 	};
-	template <unsigned Der>
-	struct Gen_<Der, P, true> {
+	template <unsigned Der, unsigned P_>
+	struct Gen_<Der, P_, true, true> {
 		static __forceinline void Gen(const R& x, R* const out) { out[P_ - 1] = 0; }
 		static __forceinline void Gen(const R& s, const R& x, R* const out) { out[P_ - 1] = 0; }
 	};
-	template <unsigned Der>
-	struct Gen_<Der, P, false> {
-		static __forceinline void Gen(const R& x, R* const out) { out[P_ - 1] = Der*Power<P_ - Der>(x); }
-		static __forceinline void Gen(const R& s, const R& x, R* const out) { out[P_ - 1] = Der*Power<P_ - Der>(x / s)*Power<Der>(1 / s); }
+	template <unsigned Der, unsigned P_>
+	struct Gen_<Der, P_, false, true> {
+		static __forceinline void Gen(const R& x, R* const out) { out[P_ - 1] = A<P_, Der>()*Power<P_ - Der>(x); }
+		static __forceinline void Gen(const R& s, const R& x, R* const out) { out[P_ - 1] = A<P_, Der>()*Power<P_ - Der>(x / s)*Power<Der>(1 / s); }
 	};
 public:
 	template <unsigned Der> static __forceinline void Gen(const R& x, R* const out) { Gen_<Der>::Gen(x, out); }
@@ -142,12 +143,12 @@ int _tmain(int argc, _TCHAR* argv[])
 	//std::cout << out << std::endl;
 
 	std::cout << " Derivative_A test: " << std::endl;
-	typedef Polynomial_A<float, 1, 1> Poly;
+	typedef Polynomial_A<float, 1, 4> Poly;
 	typedef Eigen::Matrix<float, Poly::value, 1> vecPoly;
-	typedef Derivative_A<float, 1, 1> Der;
+	typedef Derivative_A<float, 1, 4> Der;
 	float derIn = 2;
 	vecPoly out;
-	Der::Gen<1>(derIn, out.data());
+	Der::Gen<2>(derIn, out.data());
 	std::cout << out << std::endl;
 
 	return 0;
