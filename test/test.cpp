@@ -156,6 +156,21 @@ public:
 	template <unsigned P>											struct test <P, 1, true>	{ static __forceinline void Run() { std::cout << 0 << std::endl; } };
 };
 
+template <typename R, unsigned D>
+class LinkCell {
+	typedef Eigen::Matrix<R, D, 1>		vecD;
+	typedef Eigen::Matrix<int, D, 1>	iVecD;
+public:
+	template <unsigned D_ = 0, bool Over = (D_ == (D - 1))> struct Convert {
+		template <typename U, typename V> static __forceinline void Gen(const U* const in, V* const out) { out[D_] = static_cast<V>(in[D_]); Convert<D_ + 1>::Gen(in, out); }
+	};
+	template <unsigned D_>								struct Convert < D_, true > {
+		template <typename U, typename V> static __forceinline void Gen(const U* const in, V* const out) { out[D_] = static_cast<V>(in[D_]); }
+	};
+
+	static __forceinline const iVecD iCoord(const vecD& p) { iVecD ret; Convert<>::Gen(p.data(), ret.data()); return ret; }
+};
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	//typedef Polynomial_A<float, 2, 4> Poly;
@@ -195,6 +210,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	vecPoly2D out;
 	Der2D::Gen<1,0>(2, derIn2D.data(), out.data());
 	std::cout << out << std::endl;
+
+	std::cout << " converter test: " << std::endl;
+	Eigen::Matrix<float, 2, 1> input;
+	input << 1.1f, 2.1f;
+	std::cout << LinkCell<float, 2>::iCoord(input) << std::endl;
 
 	std::cout << " test over " << std::endl;
 
